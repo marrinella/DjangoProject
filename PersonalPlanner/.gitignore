@@ -1,8 +1,10 @@
 # created by virtualenv automatically
+.venv/
+.idea/
+__pycache__/
+*.pyc
 .env
 db.sqlite3
-.idea/
-.venv/
-__pycache__/
+staticfiles/
 
 
