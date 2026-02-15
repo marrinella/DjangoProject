@@ -1,0 +1,38 @@
+{% load static %}
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Personal Planner{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand"><a href="{% url 'event-list' %}">📅 PersonalPlanner</a></div>
+
+      <div class="nav-links">
+        <a class="btn" href="{% url 'event-list' %}">Події</a>
+        <a class="btn btn-primary" href="{% url 'event-create' %}">+ Додати</a>
+        <a class="btn" href="{% url 'telegram-link' %}">Telegram</a>
+
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'logout' %}" style="margin:0">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Вийти</button>
+          </form>
+        {% else %}
+          <a class="btn" href="{% url 'login' %}">Увійти</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <div class="footer">
+      © {{ now|default_if_none:"" }} PersonalPlanner
+    </div>
+  </div>
+</body>
+</html>

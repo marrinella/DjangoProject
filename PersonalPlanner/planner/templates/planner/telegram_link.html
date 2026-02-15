@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Telegram{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>Telegram</h2>
+
+  {% if profile.telegram_id %}
+    <p>✅ Telegram прив’язаний.</p>
+    <p class="badge">Telegram ID: {{ profile.telegram_id }}</p>
+
+    <form method="post" action="{% url 'telegram-unlink' %}" style="margin-top:12px;">
+      {% csrf_token %}
+      <button class="btn btn-danger" type="submit">Відв’язати Telegram</button>
+    </form>
+
+  {% else %}
+    <p>Telegram ще не прив’язаний.</p>
+
+    {% if profile.link_code %}
+      <p>Твій код:</p>
+      <p class="badge" style="font-size:16px;">{{ profile.link_code }}</p>
+      <p>Напиши боту:</p>
+      <pre>/link {{ profile.link_code }}</pre>
+    {% else %}
+      <p>Натисни кнопку, щоб отримати код.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'telegram-generate' %}" style="margin-top:12px;">
+      {% csrf_token %}
+      <button class="btn btn-primary" type="submit">Згенерувати код</button>
+    </form>
+  {% endif %}
+
+</div>
+{% endblock %}
+

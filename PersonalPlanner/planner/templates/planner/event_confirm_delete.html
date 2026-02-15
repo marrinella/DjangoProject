@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Видалити подію{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>Видалити подію?</h2>
+  <p>Точно видаляємо: <strong>{{ object.title }}</strong> ({{ object.date }} {{ object.time|time:"H:i" }})</p>
+
+  <form method="post" class="toolbar">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Так, видалити</button>
+    <a class="btn" href="{% url 'event-list' %}">Скасувати</a>
+  </form>
+</div>
+{% endblock %}
+

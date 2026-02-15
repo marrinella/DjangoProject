@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Подія{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>Подія</h2>
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="toolbar">
+      <button class="btn btn-primary" type="submit">Зберегти</button>
+      <a class="btn" href="{% url 'event-list' %}">Скасувати</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

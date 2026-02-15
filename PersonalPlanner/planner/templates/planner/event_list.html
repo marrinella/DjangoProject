@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load planner_extras %}
+
+{% block title %}Події{% endblock %}
+
+{% block content %}
+<div class="card">
+
+  <div class="toolbar">
+    <div>
+      <a class="btn" href="/?year={{ prev_year }}&month={{ prev_month }}">← Prev</a>
+      <span class="badge">{{ month_name }} {{ year }}</span>
+      <a class="btn" href="/?year={{ next_year }}&month={{ next_month }}">Next →</a>
+    </div>
+  </div>
+
+  <div class="cal-grid">
+    {% for week in month_days %}
+      {% for day in week %}
+        <div class="day {% if day.month != month %}muted{% endif %}">
+          <div class="date">
+            <span>{{ day|date:"d.m" }}</span>
+            {% if day == today %}<span class="badge">today</span>{% endif %}
+          </div>
+
+          {% with day_events=events_by_day|get_item:day %}
+            {% if day_events %}
+              {% for event in day_events %}
+                <div class="event">
+                  <div class="event-title">{{ event.title }}</div>
+                  <div class="event-meta">
+                    🕒 {{ event.time|time:"H:i" }}
+                    {% if event.location %} • 📍 {{ event.location }}{% endif %}
+                  </div>
+                  <div class="event-meta">
+                    <a href="{% url 'event-edit' event.pk %}">edit</a> ·
+                    <a href="{% url 'event-delete' event.pk %}">delete</a>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+
